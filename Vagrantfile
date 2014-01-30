@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", "512"]
    end
-  config.vm.network "forwarded_port", guest: 3333, host:3000,
+  config.vm.network "forwarded_port", guest: 3000, host:3000,
     auto_correct: true
 $bootstrap_script = <<BOOTS
 echo "Get some Coffee -- this is going to take a while"

@@ -1,27 +1,3 @@
-# This file describes the standard way to build Docker, using docker
-#
-# Usage:
-#
-# # Assemble the full dev environment. This is slow the first time.
-# docker build -t docker .
-#
-# # Mount your source in an interactive container for quick testing:
-# docker run -v `pwd`:/go/src/github.com/dotcloud/docker -privileged -i -t docker bash
-#
-# # Run the test suite:
-# docker run -privileged docker hack/make.sh test
-#
-# # Publish a release:
-# docker run -privileged \
-#  -e AWS_S3_BUCKET=baz \
-#  -e AWS_ACCESS_KEY=foo \
-#  -e AWS_SECRET_KEY=bar \
-#  -e GPG_PASSPHRASE=gloubiboulga \
-#  docker hack/release.sh
-#
-# Note: Apparmor used to mess with privileged mode, but this is no longer
-# the case. Therefore, you don't have to disable it anymore.
-#
 
 FROM	stackbrew/ubuntu:12.04
 MAINTAINER	Vinay Malkani <vinay.malkani@stem.com> (@VinayMalkani)
@@ -47,9 +23,11 @@ RUN cd /stem && npm install -g express
 
 #install hello-world
 RUN cd /stem && express hello-world
-RUN cd /stem/hello-world && npm install hello world
-
+RUN cd /stem/hello-world && npm install express
+RUN cd /stem/hello-world && npm install jade
 #run hello world
-WORKDIR /stem/hello-world
-CMD["node app"]
 
+EXPOSE 3000
+CMD ["node", "app.js"]
+
+WORKDIR /stem/hello-world
